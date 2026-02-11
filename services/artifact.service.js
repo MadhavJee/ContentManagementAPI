@@ -1,40 +1,41 @@
 import Artifact from "../models/artifact.js";
-
-/**
- * Create a new artifact
- */
+import { v2 as cloudinary } from "cloudinary";
 export const createArtifactService = async ({
   title,
   content,
-  userId
+  userId,
+  filepath
 }) => {
   if (!title || !content) {
     throw new Error("Title and content are required");
   }
 
+ let mediaUrl = null;
+  if (filepath) {
+    const uploadResult = await cloudinary.uploader.upload(filepath, {
+      folder: "artifacts"
+    });
+    mediaUrl = uploadResult.secure_url;
+    Fs.unlinkSync(filepath);
+  }
+  console.log("Media URL:", mediaUrl);
+  
   const artifact = await Artifact.create({
     title,
     content,
-    author: userId
+    author: userId,
+    media: mediaUrl || null
   });
 
   return artifact;
 };
 
-
-
-
-
-
-
-
-
 export const getArtifactsService = async ({ userId, role }) => {
   if (role === "ADMIN") {
-    // Admin sees everything
+    
     return await Artifact.find().populate("author", "name email role");
   }
 
-  // Non-admin sees only their own artifacts
+  
   return await Artifact.find({ author: userId });
 };
