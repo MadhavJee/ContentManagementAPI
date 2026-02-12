@@ -1,4 +1,4 @@
-import Artifact from "../models/artifact.js";
+import Artifact from "../models/artifact.model.js";
 import { v2 as cloudinary } from "cloudinary";
 export const createArtifactService = async ({
   title,

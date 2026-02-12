@@ -8,6 +8,7 @@ import comment from "./routes/comment.route.js";
 import cookieParser from "cookie-parser";
 import { testing } from "./crons/testing.js";
 import webhookRoutes from "./webhook/webhook.js"
+import chatRoute from "./routes/chat.route.js";
 const app = express();
 
 /* Middlewares */
@@ -32,6 +33,7 @@ app.use("/auth",authRoutes);
 app.use("/artifacts", artifactRoutes);
 app.use("/likes", likes);
 app.use("/comments", comment);
+app.use("/chats", chatRoute);
 export default app;
 
 

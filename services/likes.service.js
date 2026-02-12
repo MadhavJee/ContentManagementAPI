@@ -1,4 +1,4 @@
-import Like from "../models/likes.js";
+import Like from "../models/likes.model.js";
 
 export const toggleLikeService = async ({ artifactId, userId }) => {
   const existingLike = await Like.findOne({
