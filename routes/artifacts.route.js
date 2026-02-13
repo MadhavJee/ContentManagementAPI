@@ -7,9 +7,7 @@ import { apiLimiter } from "../middlewares/rateLimiter.middleware.js";
 
 const router = express.Router();
 
-/**
- * Protected Artifact APIs
- */
+
 router.post("/", authMiddleware, upload.single("file"), createArtifact);
 router.get("/", apiLimiter, authMiddleware,authorizeRoles("ADMIN"), getArtifacts);
 export default router;

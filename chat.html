@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket Test</title>
+</head>
+<body>
+    <h1>Live Chat Test</h1>
+    <input id="userId" placeholder="Your User ID" />
+    <button onclick="connectUser()">Connect</button>
+    <div id="messages"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket;
+
+        function connectUser() {
+            const userId = document.getElementById('userId').value;
+            if (!userId) {
+                alert('Please enter your User ID');
+                return;
+            }
+
+            socket = io();
+
+            socket.emit('join', { userId });
+
+            socket.on('message', (data) => {
+                const messagesDiv = document.getElementById('messages');
+                const messageElement = document.createElement('p');
+                messageElement.textContent = `From ${data.from}: ${data.message}`;
+                messagesDiv.appendChild(messageElement);
+            });
+        }
+    
+     </body>
+</html>
